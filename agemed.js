@@ -1,7 +1,10 @@
-var webdriver = require('selenium-webdriver'),
+const webdriver = require('selenium-webdriver'),
 By = webdriver.By,
-until = webdriver.until;
-Keys = webdriver.Key;
+until = webdriver.until,
+Key = webdriver.Key;
+
+//const {Builder, By, Key, until, webdriver} = require('selenium-webdriver');
+
 
 var driver = new webdriver.Builder()
 .forBrowser('chrome')
@@ -28,15 +31,22 @@ let form = driver.findElement(By.id('form-restricted-area')).submit();
 
 //Inserindo a cidade de pesquisa.
 let inputPesquisa = ('//div[@id="ajaxsearchpro4_1"]//div[@class="proinput"]//input[@class="orig"]');
-driver.findElement(By.xpath(inputPesquisa)).sendKeys('Florianópolis');
+driver.findElement(By.xpath(inputPesquisa)).sendKeys('Cardiologista');
+driver.wait(until.elementLocated(By.xpath(inputPesquisa)), 5000);
+driver.findElement(By.xpath(inputPesquisa)).sendKeys(Key.ENTER);
 
 
-let btnPesquisa = ('//div[@id="ajaxsearchpro4_1"]//div[@class="promagnifier"]//div[@class="asp_text_button hiddend"]');
-driver.findElement(By.xpath(btnPesquisa)).click();
+let resultados = ('//div[@id="search-results"]//div[@class="row busca-item"]//a');
+driver.findElements(By.xpath(resultados)).then(elementos => {cd 
+    for (let i = 0; i <= elementos.length; i++) {
+        elementos[i].click();
+    }
 
-//driver.findElement(By.name('q')).sendKeys('wiki');
-
-//driver.findElement(By.name('btnK')).click();
+    // driver.findElement(By.xpath('//div[@id="search-results"]//div[@class="row busca-item"]//a')).then(elemento => {
+    //     elemento.click();
+    // });
+    // console.log(elementos.length);
+});
 
 // driver.controlFlow().execute(() => {
 //     console.log("Isso daqui só executa na hora que deve executar, nao no inicio da aplicacao");
